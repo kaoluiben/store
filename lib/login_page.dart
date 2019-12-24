@@ -39,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(40)), //設置按鈕的形狀，半圓角的矩形邊，
       highlightElevation: 0, //陰影的範圍，值越大陰影範圍越大
       borderSide: BorderSide(color: Colors.grey), //邊框顏色
+      //給子節點設置內邊距屬性
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: Row(
@@ -60,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                 )),
           ],
         ),
-      ), //給子節點設置內邊距屬性
+      ),
     );
   }
 }
