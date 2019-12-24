@@ -79,7 +79,7 @@ class FirstScreen extends StatelessWidget {
                     'Sign Out',
                     style: TextStyle(
                       fontSize: 25,
-                      color: Colors.white,
+                      color: Colors.black54,
                     ),
                   ),
                 ),
