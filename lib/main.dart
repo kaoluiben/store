@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Login',
       theme: ThemeData(
+        //主题颜色样本
         primarySwatch: Colors.blue,
       ),
       home: LoginPage(),
