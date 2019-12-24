@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:store/first_screen.dart';
+import 'sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -34,7 +36,13 @@ class _LoginPageState extends State<LoginPage> {
     //OutlineButton ，帶邊框的按鈕中文叫線框按鈕。
     return OutlineButton(
       splashColor: Colors.grey, //點擊按鈕時水波紋的顏色
-      onPressed: () {},
+      onPressed: () {
+        signInWithGoogle().whenComplete(() {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return FirstScreen();
+          }));
+        });
+      },
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(40)), //設置按鈕的形狀，半圓角的矩形邊，
       highlightElevation: 0, //陰影的範圍，值越大陰影範圍越大
