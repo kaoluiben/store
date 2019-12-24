@@ -28,7 +28,8 @@ class FirstScreen extends StatelessWidget {
                 ),
                 radius: 60,
                 //透明色
-                backgroundColor: Colors.transparent,
+                //backgroundColor: Colors.transparent,
+                backgroundColor: Colors.black,
               ),
               SizedBox(height: 40),
               Text(
@@ -36,13 +37,13 @@ class FirstScreen extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black54),
+                    color: Colors.white),
               ),
               Text(
                 name,
                 style: TextStyle(
                     fontSize: 25,
-                    color: Colors.deepPurple,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
@@ -51,14 +52,14 @@ class FirstScreen extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black54),
+                    color: Colors.white),
               ),
               Text(
                 email,
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple),
+                    color: Colors.white),
               ),
               SizedBox(height: 40),
               RaisedButton(
@@ -71,7 +72,7 @@ class FirstScreen extends StatelessWidget {
                     return LoginPage();
                   }), ModalRoute.withName('/'));
                 },
-                color: Colors.deepPurple,
+                color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
