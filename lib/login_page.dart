@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:store/first_screen.dart';
 import 'sign_in.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -48,15 +49,21 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       child: TextField(
-        keyboardType: TextInputType.number,
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          //沒有底線
-          border: InputBorder.none,
-          //提示
-          hintText: '輸入電話 +88690000000',
-        ),
-      ),
+          keyboardType: TextInputType.number,
+          textAlign: TextAlign.center,
+          decoration: InputDecoration(
+            //沒有底線
+            border: InputBorder.none,
+            //提示
+            hintText: '輸入電話 0900000000',
+          ),
+          onChanged: (value) {
+            if (isNumber(value)) {
+              print('phone number : $value');
+            } else {
+              Alert(context: context, title: '請輸入數值').show();
+            }
+          }),
     );
   }
 
@@ -109,4 +116,9 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
+}
+
+//判斷是否為數值
+bool isNumber(String value) {
+  return RegExp('^[0-9]*\$').hasMatch(value);
 }
