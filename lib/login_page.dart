@@ -20,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               FlutterLogo(size: 150),
               SizedBox(height: 50),
+              _phoneSignInButton(),
+              SizedBox(height: 20),
               _googleSignInButton(),
             ],
           ),
@@ -29,6 +31,34 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   //Phone SignIn
+  Widget _phoneSignInButton() {
+    return Container(
+      width: 250,
+      decoration: BoxDecoration(
+        // 邊界（`border`）屬性，要在背景顏色、漸變或圖像上方繪製的邊框。
+        border: Border.all(
+          width: 1.0,
+          color: Colors.grey,
+        ),
+        // 邊界半徑（`borderRadius`）屬性，對此容器框的角進行舍入。
+        borderRadius: const BorderRadius.all(
+          // 半徑（`Radius`）類，圓形或橢圓形的半徑。
+          // 邊界半徑.圓（`Radius.circular`）構造函數，構造一個圓形半徑。
+          const Radius.circular(25.0),
+        ),
+      ),
+      child: TextField(
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          //沒有底線
+          border: InputBorder.none,
+          //提示
+          hintText: '輸入電話 +88690000000',
+        ),
+      ),
+    );
+  }
 
   //Google SignIn
   Widget _googleSignInButton() {
