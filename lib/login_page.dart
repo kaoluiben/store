@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
               FlutterLogo(size: 150),
               SizedBox(height: 50),
               _phoneSignInButton(),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               _googleSignInButton(),
             ],
           ),
@@ -34,36 +34,51 @@ class _LoginPageState extends State<LoginPage> {
   //Phone SignIn
   Widget _phoneSignInButton() {
     return Container(
-      width: 250,
-      decoration: BoxDecoration(
-        // 邊界（`border`）屬性，要在背景顏色、漸變或圖像上方繪製的邊框。
-        border: Border.all(
-          width: 1.0,
-          color: Colors.grey,
-        ),
-        // 邊界半徑（`borderRadius`）屬性，對此容器框的角進行舍入。
-        borderRadius: const BorderRadius.all(
-          // 半徑（`Radius`）類，圓形或橢圓形的半徑。
-          // 邊界半徑.圓（`Radius.circular`）構造函數，構造一個圓形半徑。
-          const Radius.circular(25.0),
-        ),
-      ),
-      child: TextField(
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-          decoration: InputDecoration(
-            //沒有底線
-            border: InputBorder.none,
-            //提示
-            hintText: '輸入電話 0900000000',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: 200,
+            decoration: BoxDecoration(
+              // 邊界（`border`）屬性，要在背景顏色、漸變或圖像上方繪製的邊框。
+              border: Border.all(
+                width: 1.0,
+                color: Colors.grey,
+              ),
+              // 邊界半徑（`borderRadius`）屬性，對此容器框的角進行舍入。
+              borderRadius: const BorderRadius.all(
+                // 半徑（`Radius`）類，圓形或橢圓形的半徑。
+                // 邊界半徑.圓（`Radius.circular`）構造函數，構造一個圓形半徑。
+                const Radius.circular(25.0),
+              ),
+            ),
+            child: TextField(
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                //沒有底線
+                border: InputBorder.none,
+                //提示
+                hintText: '輸入電話 0900000000',
+              ),
+              //判斷輸入是否為數值
+              onChanged: (value) {
+                if (!isNumber(value)) {
+                  Alert(context: context, title: '請輸入數值').show();
+                }
+              },
+            ),
           ),
-          onChanged: (value) {
-            if (isNumber(value)) {
-              print('phone number : $value');
-            } else {
-              Alert(context: context, title: '請輸入數值').show();
-            }
-          }),
+          SizedBox(width: 10),
+          Container(
+            child: IconButton(
+              icon: Icon(Icons.settings_phone),
+              color: Colors.blue,
+              onPressed: () {},
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -122,3 +137,6 @@ class _LoginPageState extends State<LoginPage> {
 bool isNumber(String value) {
   return RegExp('^[0-9]*\$').hasMatch(value);
 }
+
+//Sent smsOTP
+//判斷phone number是否為10碼，不足補0

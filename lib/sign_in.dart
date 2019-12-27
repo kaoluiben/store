@@ -1,15 +1,76 @@
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-final GoogleSignIn _signIn = GoogleSignIn();
+final GoogleSignIn _googlesignIn = GoogleSignIn();
 
+//display with google
 String name;
 String email;
 String imageUrl;
 
+//display with phone
+String phoneNo;
+String smsOTP;
+String vericationId;
+String errorMessage;
+
+//phone Authentication
+Future<void> verifyPhone() {
+  final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
+    vericationId = verId;
+  };
+
+  //驗證碼對話框
+  Future<bool> smsOTPDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        //是否可取消對話框
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('請輸入驗證碼'),
+            content: Container(
+              height: 85,
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    onChanged: (value) {
+                      smsOTP = value;
+                    },
+                  ),
+                  //錯誤訊息
+                  errorMessage != ''
+                      ? Text(
+                          errorMessage,
+                          style: TextStyle(color: Colors.red),
+                        )
+                      : Container()
+                ],
+              ),
+            ),
+            contentPadding: const EdgeInsets.all(10),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('確定'),
+                onPressed: () {
+                  //判斷是否已登入，
+                  _auth.currentUser().then((user) {
+                    if (user != null) {
+                    } else {}
+                  });
+                },
+              ),
+            ],
+          );
+        });
+  }
+}
+
+//google Authentication
 Future<String> signInWithGoogle() async {
-  final GoogleSignInAccount _signInAccount = await _signIn.signIn();
+  final GoogleSignInAccount _signInAccount = await _googlesignIn.signIn();
   final GoogleSignInAuthentication _signInAuthentication =
       await _signInAccount.authentication;
 
@@ -45,6 +106,6 @@ Future<String> signInWithGoogle() async {
 }
 
 void signOutGoogle() async {
-  await _signIn.signOut();
+  await _googlesignIn.signOut();
   print("User Sign Out");
 }
