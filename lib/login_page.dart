@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store/first_screen.dart';
+import 'package:store/second_screen.dart';
 import 'sign_in.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -74,7 +75,14 @@ class _LoginPageState extends State<LoginPage> {
             child: IconButton(
               icon: Icon(Icons.settings_phone),
               color: Colors.blue,
-              onPressed: () {},
+              onPressed: () {
+                verifyPhone().whenComplete(() {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return SecondScreen();
+                  }));
+                });
+              },
             ),
           ),
         ],

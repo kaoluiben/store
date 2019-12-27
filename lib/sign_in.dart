@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/services.dart';
+import 'package:store/second_screen.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googlesignIn = GoogleSignIn();
@@ -16,8 +18,10 @@ String smsOTP;
 String vericationId;
 String errorMessage;
 
+FirebaseUser user;
+
 //phone Authentication
-Future<void> verifyPhone() {
+Future<String> verifyPhone() {
   final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
     vericationId = verId;
   };
@@ -25,47 +29,73 @@ Future<void> verifyPhone() {
   //驗證碼對話框
   Future<bool> smsOTPDialog(BuildContext context) {
     return showDialog(
-        context: context,
-        //是否可取消對話框
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('請輸入驗證碼'),
-            content: Container(
-              height: 85,
-              child: Column(
-                children: <Widget>[
-                  TextField(
-                    onChanged: (value) {
-                      smsOTP = value;
-                    },
-                  ),
-                  //錯誤訊息
-                  errorMessage != ''
-                      ? Text(
-                          errorMessage,
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : Container()
-                ],
-              ),
+      context: context,
+      //是否可取消對話框
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('請輸入驗證碼'),
+          content: Container(
+            height: 85,
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  onChanged: (value) {
+                    smsOTP = value;
+                  },
+                ),
+                //錯誤訊息
+                errorMessage != ''
+                    ? Text(
+                        errorMessage,
+                        style: TextStyle(color: Colors.red),
+                      )
+                    : Container()
+              ],
             ),
-            contentPadding: const EdgeInsets.all(10),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('確定'),
-                onPressed: () {
-                  //判斷是否已登入，
-                  _auth.currentUser().then((user) {
+          ),
+          contentPadding: const EdgeInsets.all(10),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('確定'),
+              onPressed: () {
+                //判斷是否已登入，
+                _auth.currentUser().then(
+                  (user) {
                     if (user != null) {
-                    } else {}
-                  });
-                },
-              ),
-            ],
-          );
-        });
+                      // //返回上一個頁面
+                      // Navigator.of(context).pop();
+                      // //導航頁面
+                      // Navigator.of(context)
+                      //     .pushReplacementNamed('/second_screen');
+                      print('您已登入');
+                    } else {
+                      user = signInWithPhone(context) as FirebaseUser;
+                      print(user.displayName);
+                    }
+                  },
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
+}
+
+Future<String> signInWithPhone(context) async {
+  final AuthCredential _credential = PhoneAuthProvider.getCredential(
+    verificationId: vericationId,
+    smsCode: smsOTP,
+  );
+  final AuthResult _result = await _auth.signInWithCredential(_credential);
+  final FirebaseUser _user = _result.user;
+  final FirebaseUser _currentUser = await _auth.currentUser();
+  assert(_user.uid == _currentUser.uid);
+  Navigator.of(context).pop();
+  Navigator.of(context).pushReplacementNamed('/second_screen');
+  return '$_user';
 }
 
 //google Authentication
