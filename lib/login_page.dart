@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
               icon: Icon(Icons.settings_phone),
               color: Colors.blue,
               onPressed: () {
-                verifyPhone().whenComplete(() {
+                verifyPhone(context).whenComplete(() {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                     return SecondScreen();

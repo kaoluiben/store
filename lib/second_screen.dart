@@ -9,7 +9,7 @@ class SecondScreen extends StatelessWidget {
       body: Container(
         child: Center(
           child: Text(
-            user.displayName,
+            'test',
           ),
         ),
       ),
