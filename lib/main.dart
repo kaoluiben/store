@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import './Widgets/FormCard.dart';
 import 'CustomIcons.dart';
 
 void main() => runApp(MaterialApp(
@@ -14,12 +13,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isSelected = false;
-
-  void _radio() {
-    setState(() {
-      _isSelected = !_isSelected;
-    });
+  final myController = TextEditingController();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
   }
 
   Widget radioButton(bool isSelected) => Container(
@@ -63,45 +62,84 @@ class _MyAppState extends State<MyApp> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(top: 20.0),
-                  child: Image.asset('assets/image_01.png')),
-              Expanded(
-                child: Container(),
-              ),
-              Image.asset('assets/image_02.png'),
-            ],
-          ),
           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 60.0),
               child: Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/logo.png',
-                        width: ScreenUtil.getInstance().setWidth(110),
-                        height: ScreenUtil.getInstance().setHeight(110),
-                      ),
-                      Text(
-                        'LOGO',
-                        style: TextStyle(
-                          fontFamily: 'Poppins-Bold',
-                          fontSize: ScreenUtil.getInstance().setSp(46),
-                          letterSpacing: .6,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
                   SizedBox(
                     height: ScreenUtil.getInstance().setHeight(180),
                   ),
-                  FormCard(),
+                  Container(
+                    width: double.infinity,
+                    height: ScreenUtil.getInstance().setHeight(400),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0.0, 15.0),
+                          blurRadius: 15.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0.0, -10.0),
+                          blurRadius: 10.0,
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Login',
+                            style: TextStyle(
+                              fontSize: ScreenUtil.getInstance().setSp(45),
+                              fontFamily: 'Poppins-Bold',
+                              letterSpacing: .6,
+                            ),
+                          ),
+                          SizedBox(
+                            height: ScreenUtil.getInstance().setHeight(30),
+                          ),
+                          Text(
+                            'Username',
+                            style: TextStyle(
+                              fontFamily: 'Poppins-Medium',
+                              fontSize: ScreenUtil.getInstance().setSp(26),
+                            ),
+                          ),
+                          TextField(
+                            decoration: InputDecoration(
+                                hintText: 'username',
+                                hintStyle: TextStyle(
+                                    color: Colors.grey, fontSize: 12.0)),
+                          ),
+                          SizedBox(
+                            height: ScreenUtil.getInstance().setHeight(30),
+                          ),
+                          Text(
+                            'Password',
+                            style: TextStyle(
+                              fontFamily: 'Poppins-Medium',
+                              fontSize: ScreenUtil.getInstance().setSp(26),
+                            ),
+                          ),
+                          TextField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                hintText: 'password',
+                                hintStyle: TextStyle(
+                                    color: Colors.grey, fontSize: 12.0)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: ScreenUtil.getInstance().setHeight(35),
                   ),
