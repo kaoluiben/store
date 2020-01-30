@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'CustomIcons.dart';
+import 'package:http/http.dart';
 
 void main() => runApp(MaterialApp(
       home: MyApp(),
@@ -13,11 +14,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final myController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passWordController = TextEditingController();
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    myController.dispose();
+    userNameController.dispose();
+    passWordController.dispose();
     super.dispose();
   }
 
@@ -114,6 +118,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ),
                           TextField(
+                            controller: userNameController,
                             decoration: InputDecoration(
                                 hintText: 'username',
                                 hintStyle: TextStyle(
@@ -130,6 +135,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ),
                           TextField(
+                            controller: passWordController,
                             obscureText: true,
                             decoration: InputDecoration(
                                 hintText: 'password',
@@ -172,7 +178,21 @@ class _MyAppState extends State<MyApp> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () async {
+                                String userNo = userNameController.text;
+                                String passWord = passWordController.text;
+                                String url =
+                                    "http://10.19.10.40:9080/emrx/AppWebService?userNo=$userNo&passWord=$passWord";
+                                Map<String, String> headers = {
+                                  "Content-type": "application/json"
+                                };
+
+                                Response response =
+                                    await post(url, headers: headers);
+                                int statusCode = response.statusCode;
+                                print("statusCode :" + statusCode.toString());
+                                print(response.body);
+                              },
                               child: Center(
                                 child: Text(
                                   'SIGNIN',
