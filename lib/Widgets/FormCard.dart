@@ -6,7 +6,7 @@ class FormCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        height: ScreenUtil.getInstance().setHeight(500),
+        height: ScreenUtil.getInstance().setHeight(400),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8.0),
@@ -61,20 +61,6 @@ class FormCard extends StatelessWidget {
                     hintText: 'password',
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
               ),
-              SizedBox(
-                height: ScreenUtil.getInstance().setHeight(35),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Text('Forgot Password?',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontFamily: 'Poppins-Medium',
-                        fontSize: ScreenUtil.getInstance().setSp(28),
-                      ))
-                ],
-              )
             ],
           ),
         ));
