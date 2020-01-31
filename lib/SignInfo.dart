@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SignInfo extends StatelessWidget {
   Map<String, dynamic> result;
   Map<String, dynamic> data;
-  List sheetInfo;
+  List<dynamic> sheetInfo;
   SignInfo(this.result);
 
   @override
@@ -20,12 +20,10 @@ class SignInfo extends StatelessWidget {
       appBar: AppBar(
         title: Text('SignInfo'),
       ),
-      body: new Center(
-        child: ListView(
-          children: <Widget>[
-            Column(
-              children: <Widget>[Text('$data')],
-            ),
+      body: Container(
+        child: Column(
+          children: [
+            for (var key in data.keys) if (key == 'sheetNo') Text(data[key]),
           ],
         ),
       ),
