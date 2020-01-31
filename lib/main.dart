@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'CustomIcons.dart';
 import 'package:http/http.dart';
+import 'SignInfo.dart';
+import 'dart:convert';
 
 void main() => runApp(MaterialApp(
       home: MyApp(),
@@ -178,9 +180,11 @@ class _MyAppState extends State<MyApp> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
+                              //手指輕觸螢幕事件
                               onTap: () async {
-                                String userNo = userNameController.text;
-                                String passWord = passWordController.text;
+                                String userNo = userNameController.text.trim();
+                                String passWord =
+                                    passWordController.text.trim();
                                 String url =
                                     "http://10.19.10.40:9080/emrx/AppWebService?userNo=$userNo&passWord=$passWord";
                                 Map<String, String> headers = {
@@ -190,8 +194,23 @@ class _MyAppState extends State<MyApp> {
                                 Response response =
                                     await post(url, headers: headers);
                                 int statusCode = response.statusCode;
-                                print("statusCode :" + statusCode.toString());
-                                print(response.body);
+                                if (response.statusCode == 200) {
+                                  var result = jsonDecode(response.body)
+                                      as Map<String, dynamic>;
+                                  var data = result['LoginInfo'][0]
+                                      as Map<String, dynamic>;
+                                  for (var key in data.keys) {
+                                    //print(data[key]);
+                                    print('$data');
+                                    if (key == '0') {
+                                      Navigator.push(
+                                          context,
+                                          new MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  new SignInfo(result)));
+                                    }
+                                  }
+                                }
                               },
                               child: Center(
                                 child: Text(
@@ -216,5 +235,25 @@ class _MyAppState extends State<MyApp> {
         ],
       ),
     );
+  }
+}
+
+class JsonValue {
+  String key;
+  int value;
+
+  JsonValue({this.key, this.value});
+
+  JsonValue.fromJson(Map<String, dynamic> json) {
+    key = json['key'];
+    value = json['value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['key'] = this.key;
+    data['value'] = this.value;
+
+    return data;
   }
 }
