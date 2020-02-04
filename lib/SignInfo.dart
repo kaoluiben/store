@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class SignInfo extends StatelessWidget {
   Map<String, dynamic> result;
   Map<String, dynamic> data;
-  List<dynamic> sheetInfo;
   SignInfo(this.result);
 
   @override
   Widget build(BuildContext context) {
-    for (var i = 0; i < result['SignInfo'].length; i++) {
-      data = result['SignInfo'][i] as Map<String, dynamic>;
-      for (var key in data.keys) {
-        if (key == 'sheetNo') {
-          print('$data');
-        }
-      }
-    }
     return Scaffold(
-      appBar: AppBar(
-        title: Text('SignInfo'),
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            for (var key in data.keys) if (key == 'sheetNo') Text(data[key]),
-          ],
-        ),
-      ),
+      body: ListView.builder(
+          itemCount: result['SignInfo'].length,
+          itemBuilder: (context, index) {
+            data = (result['SignInfo'][index]);
+            print('$data');
+            return ListTile(
+              title: Text('$data'),
+            );
+          }),
     );
   }
 }

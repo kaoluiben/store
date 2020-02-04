@@ -201,7 +201,7 @@ class _MyAppState extends State<MyApp> {
                                       as Map<String, dynamic>;
                                   for (var key in data.keys) {
                                     //print(data[key]);
-                                    print('$data');
+                                    //print('$data');
                                     if (key == '0') {
                                       Navigator.push(
                                           context,
