@@ -195,10 +195,10 @@ class _MyAppState extends State<MyApp> {
                                     await post(url, headers: headers);
                                 int statusCode = response.statusCode;
                                 if (response.statusCode == 200) {
-                                  var result = jsonDecode(response.body)
-                                      as Map<String, dynamic>;
-                                  var data = result['LoginInfo'][0]
-                                      as Map<String, dynamic>;
+                                  var result = jsonDecode(response.body);
+                                  //as Map<String, dynamic>;
+                                  var data = result['LoginInfo'][0];
+                                  //as Map<String, dynamic>;
                                   for (var key in data.keys) {
                                     //print(data[key]);
                                     //print('$data');
