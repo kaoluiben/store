@@ -55,8 +55,11 @@ class _SignInfo extends State<SignInfo> {
                           '$sheetName :   ' + sheetCount.toString() + '  筆   '),
                       value: _selected.contains(sheetNo),
                       controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool value) {
-                        _onSelected(value, sheetNo);
+                      selected: _selected.contains(sheetNo),
+                      onChanged: (_value) {
+                        //setState(() {
+                        _onSelected(_value, sheetNo);
+                        //});
                       },
                     )
                   ],
